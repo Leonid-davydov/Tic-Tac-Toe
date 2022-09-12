@@ -6,6 +6,7 @@ import by.incubator.application.players.AbstractPlayer;
 import by.incubator.application.players.Role;
 import by.incubator.application.players.impl.ComputerPlayer;
 import by.incubator.application.players.impl.HumanPlayer;
+import by.incubator.application.players.impl.hardLevel.HardComputerPlayer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,8 @@ public class MyController {
 
         if (difficulty.equals("player")) {
             player2 = new HumanPlayer();
+        } else if (difficulty.equals("hard")) {
+            player2 = new HardComputerPlayer();
         } else {
             player2 = new ComputerPlayer();
         }
@@ -42,6 +45,10 @@ public class MyController {
         } else {
             player1.setRole(Role.ZERO);
             player2.setRole(Role.CROSS);
+        }
+
+        if (player2 instanceof HardComputerPlayer) {
+            ((HardComputerPlayer) player2).init();
         }
 
         game = new Game(player1, player2);

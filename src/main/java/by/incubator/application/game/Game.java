@@ -37,7 +37,7 @@ public class Game {
                 winner = Role.CROSS;
                 return;
             }
-            if (! (zeroPlayer instanceof HumanPlayer)) {
+            if (!(zeroPlayer instanceof HumanPlayer) && turn != 10) {
                 zeroPlayer.move(-1);
                 turn++;
                 if (WinChecker.check(getBoard())) {
@@ -52,7 +52,7 @@ public class Game {
                 winner = Role.ZERO;
                 return;
             }
-            if (! (crossPlayer instanceof HumanPlayer)) {
+            if (! (crossPlayer instanceof HumanPlayer) && turn != 10) {
                 crossPlayer.move(-1);
                 turn++;
                 if (WinChecker.check(getBoard())) {
