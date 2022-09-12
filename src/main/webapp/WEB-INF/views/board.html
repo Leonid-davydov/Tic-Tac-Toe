@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>title</title>
+<!--<link rel="stylesheet" th:href="@{../../../resources/css/style.css}"/>-->
+</head>
+
+<body style="height: 80vh; width: 80vw; position: relative; background-color: white;">
+
+<header>
+    <h1 style="color: red;">TicTac</h1>
+</header>
+
+<main>
+    <div id="board" style="height: 38vw; width: 38vw; position: absolute; top: 50%; left: 50%; margin: 0 -50% 0 0; transform: translate(-50%, -50%); background-color: black;">
+        <div class="line" th:each="line : ${lines}" style="display: flex; width: 38vw;">
+            <div class="field" th:each="column : ${columns}", th:with="field = ${line * 3 + column}" style="height: 12vw; width: 12vw; margin: 0.5vw; position: relative; background-color: white;">
+                <div class="symbol cross" th:if="${boardDto[field] == 1}" style="position: absolute; top: 50%; left: 50%; margin: 0 -50% 0 0; transform: translate(-50%, -50%); width: 10vw; height: 10vw; background-color: green; clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);" ></div>
+                <div class="circle1 symbol" th:if="${boardDto[field] == -1}" style="width: 10vw; height: 10vw; background: red; border-radius: 50%; position: relative; position: absolute; top: 50%; left: 50%; margin: 0 -50% 0 0; transform: translate(-50%, -50%)" >
+                    <div class="circle2 symbol" style="width: 5vw; height: 5vw; background: white; border-radius: 50%; position: absolute; top: 50%; left: 50%; margin: 0 -50% 0 0; transform: translate(-50%, -50%)"></div>
+                </div>
+                <div th:if="${boardDto[field] == 0}">
+                    <a class="free" style="height: 12vw; width: 12vw; position: absolute; background-color: white;" th:href="@{/move(field=${field})}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+</body>
+</html>
