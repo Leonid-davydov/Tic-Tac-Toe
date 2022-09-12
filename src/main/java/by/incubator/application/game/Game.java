@@ -9,6 +9,7 @@ public class Game {
     private final AbstractPlayer crossPlayer;
     private final AbstractPlayer zeroPlayer;
     private int turn = 1;
+    private boolean isFinished;
     private Role winner = null;
 
     public Role getWinner() {
@@ -63,5 +64,12 @@ public class Game {
 
     public Board getBoard() {
         return board;
+    }
+
+    public boolean isFinished() {
+        if (turn == 10) {
+            isFinished = true;
+        }
+        return isFinished;
     }
 }

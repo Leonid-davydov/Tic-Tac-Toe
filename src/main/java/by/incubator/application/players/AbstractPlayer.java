@@ -6,6 +6,8 @@ public abstract class AbstractPlayer {
     protected Board board;
     protected Role role;
 
+    public AbstractPlayer() {}
+
     public AbstractPlayer(Board board, Role role) {
         this.board = board;
         this.role = role;
@@ -20,4 +22,12 @@ public abstract class AbstractPlayer {
     }
 
     public abstract void move(int field);
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

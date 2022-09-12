@@ -7,6 +7,8 @@ import by.incubator.application.players.Role;
 import java.util.List;
 
 public class ComputerPlayer extends AbstractPlayer {
+    public ComputerPlayer() {}
+
     public ComputerPlayer(Board board, Role role) {
         super(board, role);
     }
