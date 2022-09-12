@@ -49,6 +49,7 @@ public class Game {
 
             if (WinChecker.check(getBoard())) {
                 winner = Role.ZERO;
+                return;
             }
             if (! (crossPlayer instanceof HumanPlayer)) {
                 crossPlayer.move(-1);

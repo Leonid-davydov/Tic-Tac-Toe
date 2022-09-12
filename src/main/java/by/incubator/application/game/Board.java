@@ -2,17 +2,36 @@ package by.incubator.application.game;
 
 import by.incubator.application.players.Role;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Board {
     private final Role[] board;
+
+    public List<Integer> getFreeFields() {
+        return freeFields;
+    }
+
+    private final List<Integer> freeFields = new ArrayList<>();
+
+    {
+        for (int i = 0; i < 9; i++) {
+            freeFields.add(i);
+        }
+    }
 
     public Board() {
         board = new Role[9];
     }
 
     public void move(Role role, int field) {
-        board[field] = role;
+        if (!freeFields.contains(field)) {
+            throw new IllegalArgumentException("Incorrect field: " + field);
+        } else {
+            board[field] = role;
+            freeFields.remove(new Integer(field));
+        }
     }
 
     public Role[] getBoard() {
