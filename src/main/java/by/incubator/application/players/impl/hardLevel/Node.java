@@ -1,7 +1,6 @@
 package by.incubator.application.players.impl.hardLevel;
 
 import by.incubator.application.game.WinChecker;
-import by.incubator.application.players.Role;
 
 import java.util.ArrayList;
 import java.util.Arrays;
