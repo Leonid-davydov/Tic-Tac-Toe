@@ -13,12 +13,7 @@ public class HardComputerPlayer extends AbstractPlayer {
     }
 
     public void init() {
-        if (role == Role.ZERO) {
-            node = new Node(board.getDto(), true);
-        } else {
-            node = new Node(board.getDto(), false);
-        }
-
+        node = new Node(board.getDto(), true);
     }
 
     @Override
