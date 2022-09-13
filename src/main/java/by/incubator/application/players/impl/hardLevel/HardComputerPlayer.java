@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HardComputerPlayer extends AbstractPlayer {
-    private static final String paht = "D:\\Programming\\Incubator\\Java Prod\\Projects\\TicTac\\src\\main\\resources\\nodes\\crossNode";
+    private static final String paht = "D:\\Programming\\Incubator\\Java Prod\\Projects\\TicTac\\src\\main\\resources\\nodes\\node";
     Node node;
 
     public HardComputerPlayer() {
