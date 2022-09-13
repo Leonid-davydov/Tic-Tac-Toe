@@ -1,6 +1,7 @@
 package by.incubator.application.players.impl.hardLevel;
 
 import by.incubator.application.players.AbstractPlayer;
+import by.incubator.application.players.Role;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +13,12 @@ public class HardComputerPlayer extends AbstractPlayer {
     }
 
     public void init() {
-        node = new Node(board.getDto(), true);
+        if (role == Role.ZERO) {
+            node = new Node(board.getDto(), true);
+        } else {
+            node = new Node(board.getDto(), false);
+        }
+
     }
 
     @Override
@@ -29,7 +35,7 @@ public class HardComputerPlayer extends AbstractPlayer {
     }
 
     private Node findCurrentNode(Node oldNode, int[] currentBoard) {
-        if (node.getTurn() == 1) {
+        if (role == Role.CROSS && node.getTurn() == 1) {
             return node;
         }
 
