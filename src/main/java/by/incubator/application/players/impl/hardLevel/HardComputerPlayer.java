@@ -3,17 +3,27 @@ package by.incubator.application.players.impl.hardLevel;
 import by.incubator.application.players.AbstractPlayer;
 import by.incubator.application.players.Role;
 
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
 public class HardComputerPlayer extends AbstractPlayer {
+    private static final String paht = "D:\\Programming\\Incubator\\Java Prod\\Projects\\TicTac\\src\\main\\resources\\nodes\\crossNode";
     Node node;
 
     public HardComputerPlayer() {
     }
 
     public void init() {
-        node = new Node(board.getDto(), true);
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(paht))) {
+            node = ((Node) ois.readObject());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        if (node == null) {
+            node = new Node(board.getDto(), true);
+        }
     }
 
     @Override

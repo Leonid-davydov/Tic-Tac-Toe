@@ -2,12 +2,13 @@ package by.incubator.application.players.impl.hardLevel;
 
 import by.incubator.application.game.WinChecker;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class Node {
+public class Node implements Serializable {
     boolean isSmart;
     int[] board;
     int turn = 1;
