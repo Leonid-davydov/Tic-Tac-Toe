@@ -60,22 +60,27 @@
     </dependency>
 
 
-      <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>4.0.1</version>
-      </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+    </dependency>
+
+    <dependency>
+    <groupId>log4j</groupId>
+    <artifactId>log4j</artifactId>
+    <version>1.2.17</version>
+    </dependency>
   </dependencies>
 
   <build>
     <finalName>TicTac</finalName>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement>
       <plugins>
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
         </plugin>
-        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>

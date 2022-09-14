@@ -7,6 +7,7 @@ import by.incubator.application.players.Role;
 import by.incubator.application.players.impl.ComputerPlayer;
 import by.incubator.application.players.impl.HumanPlayer;
 import by.incubator.application.players.impl.hardLevel.HardComputerPlayer;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,8 @@ import java.io.IOException;
 
 @Controller
 public class MyController {
+    private static final Logger log = Logger.getLogger(MyController.class);
+
     @GetMapping("/createGame")
     public void gameCreating(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String role = request.getParameter("role");
@@ -39,7 +42,7 @@ public class MyController {
         player1.setBoard(board);
         player2.setBoard(board);
 
-        if (role.equals("cross")) {
+        if (role.equals("CROSS")) {
             player1.setRole(Role.CROSS);
             player2.setRole(Role.ZERO);
         } else {
@@ -54,6 +57,7 @@ public class MyController {
         game = new Game(player1, player2);
 
         session.setAttribute("game", game);
+        session.setAttribute("role", role);
         response.sendRedirect("http://localhost:8081/board");
     }
 
@@ -82,6 +86,9 @@ public class MyController {
         Game game = (Game) session.getAttribute("game");
         int field = Integer.parseInt(request.getParameter("field"));
         game.nextTurn(field);
+
+
+
         if (game.getWinner() != null) {
             session.setAttribute("winner", game.getWinner());
             response.sendRedirect("http://localhost:8081/congratulation");
@@ -95,6 +102,7 @@ public class MyController {
     @GetMapping("/congratulation")
     public String congratulation(Model model, HttpSession session) {
         model.addAttribute("winner", session.getAttribute("winner"));
+        logResult(session);
         return "congratulation";
     }
 
@@ -120,7 +128,25 @@ public class MyController {
     }
 
     @GetMapping("/draw")
-    public String draw() {
+    public String draw(HttpSession session) {
+        logResult(session);
         return "draw";
+    }
+
+    private void logResult(HttpSession session) {
+        String message = "Difficulty: " + session.getAttribute("difficulty") + " Role: " +
+                session.getAttribute("role") + " Result: ";
+
+        if (session.getAttribute("winner") != null) {
+            if (session.getAttribute("winner").toString().equals(session.getAttribute("role"))) {
+                message += "win";
+            } else {
+                message += "lose";
+            }
+        } else {
+            message += "draw";
+        }
+
+        log.info(message);
     }
 }
