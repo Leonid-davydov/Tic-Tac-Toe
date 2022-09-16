@@ -15,14 +15,14 @@ public class HardComputerPlayer extends AbstractPlayer {
     }
 
     public void init() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(paht))) {
-            node = ((Node) ois.readObject());
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
+//        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(paht))) {
+//            node = ((Node) ois.readObject());
+//        } catch (Exception ex) {
+//            System.out.println(ex.getMessage());
+//        }
 
         if (node == null) {
-            node = new Node(board.getDto(), true);
+            node = new Node(board.getDto(), role);
         }
     }
 
@@ -34,7 +34,7 @@ public class HardComputerPlayer extends AbstractPlayer {
         int bestMove;
 
         bestNode = moves.stream().filter(node -> node.getGrade() == currentNode.getGrade()).findAny().get();
-        bestMove = findMove(currentNode, bestNode);
+        bestMove = Node.findMove(currentNode, bestNode);
         board.move(role, bestMove);
         node = bestNode;
     }
@@ -48,18 +48,4 @@ public class HardComputerPlayer extends AbstractPlayer {
         return moves.stream().filter(a -> Arrays.equals(a.getBoard(), currentBoard)).findAny().get();
     }
 
-    private int findMove(Node current, Node wanted) {
-        int move = -1;
-
-        int[] old = current.getBoard();
-        int[] future = wanted.getBoard();
-
-        for (int i = 0; i < 9; i++) {
-            if (old[i] != future[i]) {
-                move = i;
-            }
-        }
-
-        return move;
-    }
 }
