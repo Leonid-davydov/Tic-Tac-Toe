@@ -6,29 +6,27 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
-
 public class NodeTest {
     @Test
     public void testGrades() {
         int[][] testCases = {
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},        //2
-                {1, 0, -1, 0, 0, 0, 0, 0, 0},       //1
-                {1, 0, 0, 0, -1, 0, 0, 0, 0},       //2
-                {1, -1, 1, -1, -1, 1, 0, 1, -1},    //2
-                {1, -1, 1, -1, -1, 1, 0, 1, 0},     //2
-                {1, -1, 1, -1, -1, 0, 0, 1, 1},     //3
-                {1, -1, 1, -1, -1, 0, -1, 1, 1}     //1
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 0, -1, 0, 0, 0, 0, 0, 0},
+                {1, 0, 0, 0, -1, 0, 0, 0, 0},
+                {1, -1, 1, -1, -1, 1, 0, 1, -1},
+                {1, -1, 1, -1, -1, 1, 0, 1, 0},
+                {1, -1, 1, -1, -1, 0, 0, 1, 1},
+                {1, -1, 1, -1, -1, 0, -1, 1, 1}
         };
 
         int[] grades = {2, 1, 2, 2, 2, 3, 1};
 
         for (int i = 0; i < grades.length; i++) {
-            Assert.assertEquals(grades[i], new Node(testCases[i], true).getGrade());
+            Assert.assertEquals(grades[i], new Node(testCases[i], Role.CROSS).getGrade());
         }
 
         for (int i = 0; i < grades.length; i++) {
-            Assert.assertEquals(grades[i], new Node(testCases[i], false).getGrade());
+            Assert.assertEquals(grades[i], new Node(testCases[i], Role.ZERO).getGrade());
         }
     }
 
@@ -57,7 +55,6 @@ public class NodeTest {
         List<List<Integer>> zeroGoodMoves = new ArrayList<>(6);
         zeroGoodMoves.add(Arrays.asList(8));
         zeroGoodMoves.add(Arrays.asList(5));
-
 
         Node node;
         List<Integer> moves;

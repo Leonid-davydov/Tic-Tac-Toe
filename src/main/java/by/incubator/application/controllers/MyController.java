@@ -4,7 +4,7 @@ import by.incubator.application.game.Board;
 import by.incubator.application.game.Game;
 import by.incubator.application.players.AbstractPlayer;
 import by.incubator.application.players.Role;
-import by.incubator.application.players.impl.ComputerPlayer;
+import by.incubator.application.players.impl.EasyComputerPlayer;
 import by.incubator.application.players.impl.HumanPlayer;
 import by.incubator.application.players.impl.hardLevel.HardComputerPlayer;
 import org.apache.log4j.Logger;
@@ -36,7 +36,7 @@ public class MyController {
         } else if (difficulty.equals("hard")) {
             player2 = new HardComputerPlayer();
         } else {
-            player2 = new ComputerPlayer();
+            player2 = new EasyComputerPlayer();
         }
 
         player1.setBoard(board);

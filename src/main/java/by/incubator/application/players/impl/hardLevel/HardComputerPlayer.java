@@ -8,18 +8,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HardComputerPlayer extends AbstractPlayer {
-    private static final String paht = "D:\\Programming\\Incubator\\Java Prod\\Projects\\TicTac\\src\\main\\resources\\nodes\\node";
+    private static final String crossPath = "D:\\Programming\\Incubator\\Java Prod\\Projects\\TicTac\\src\\main\\resources\\nodes\\crossNode";
+    private static final String zeroPath = "D:\\Programming\\Incubator\\Java Prod\\Projects\\TicTac\\src\\main\\resources\\nodes\\zeroNode";
+
     Node node;
 
     public HardComputerPlayer() {
     }
 
     public void init() {
-//        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(paht))) {
-//            node = ((Node) ois.readObject());
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//        }
+        setNodeFromFile();
 
         if (node == null) {
             node = new Node(board.getDto(), role);
@@ -46,6 +44,22 @@ public class HardComputerPlayer extends AbstractPlayer {
 
         List<Node> moves = oldNode.getMoves();
         return moves.stream().filter(a -> Arrays.equals(a.getBoard(), currentBoard)).findAny().get();
+    }
+
+    private void setNodeFromFile() {
+        String path;
+
+        if (role == Role.CROSS) {
+            path = crossPath;
+        } else {
+            path = zeroPath;
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
+            node = ((Node) ois.readObject());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
 }

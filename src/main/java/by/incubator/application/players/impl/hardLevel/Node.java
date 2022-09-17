@@ -17,24 +17,15 @@ public class Node implements Serializable {
     List<Node> moves = new ArrayList<>();
 
     public Node(int[] board, Role role) {
-        this.board = board;
-
-        initTurn();
-        initGrade();
-        initIsSmart(role);
-
-        if (!isFinished) {
-            init();
-        }
+        this (board, initIsSmart(role, countTurn(board)));
     }
 
-    public Node(int[] board, boolean isSmart) {
+    private Node(int[] board, boolean isSmart) {
         this.board = board;
         this.isSmart = isSmart;
 
-        initTurn();
+        turn = countTurn(board);
         initGrade();
-
 
         if (!isFinished) {
             init();
@@ -54,16 +45,6 @@ public class Node implements Serializable {
         }
 
         return move;
-    }
-
-    @Override
-    public String toString() {
-        return "Node{" +
-                "board=" + Arrays.toString(board) +
-                ", turn=" + turn +
-                ", grade=" + grade +
-                ", isFinished=" + isFinished +
-                '}';
     }
 
     public int[] getBoard() {
@@ -86,29 +67,24 @@ public class Node implements Serializable {
         return turn;
     }
 
-    private void init() {
-        if (turn % 2 == 1) {
-            for (int i = 0; i < 9; i++) {
-                if (board[i] == 0) {
-                    Node newNode = getNextNode(i, 1);
+    private static int countTurn(int[] board) {
+        int turn = 1;
 
-                    if (!isSmart || isGood(newNode)) {
-                        moves.add(newNode);
-                    }
-                }
-            }
-        } else {
-            for (int i = 0; i < 9; i++) {
-                if (board[i] == 0) {
-                    Node newNode = getNextNode(i, -1);
-
-                    if (!isSmart || isGood(newNode)) {
-                        moves.add(newNode);
-                    }
-                }
+        for (int i : board) {
+            if (i != 0) {
+                turn++;
             }
         }
 
+        return turn;
+    }
+
+    private static boolean initIsSmart(Role role, int turn) {
+        return (role == Role.CROSS && turn % 2 == 1) || (role == Role.ZERO && turn % 2 == 0);
+    }
+
+    private void init() {
+        initMoves();
         evaluateGrade();
 
         if (isSmart) {
@@ -116,11 +92,18 @@ public class Node implements Serializable {
         }
     }
 
-    private void initTurn() {
-        for (int i : board) {
-            if (i != 0) {
-                turn++;
+    public void initMoves() {
+        for (int i = 0; i < 9; i++) {
+            if (board[i] == 0) {
+                Node newNode = getNextNode(i);
+                addMove(newNode);
             }
+        }
+    }
+
+    private void addMove(Node move) {
+        if (!isSmart || isGood(move)) {
+            moves.add(move);
         }
     }
 
@@ -141,9 +124,15 @@ public class Node implements Serializable {
         }
     }
 
-    private Node getNextNode(int field, int role) {
+    private Node getNextNode(int field) {
         int[] newBoard = Arrays.copyOfRange(board, 0, 9);
-        newBoard[field] = role;
+
+        if (turn % 2 == 1) {
+            newBoard[field] = 1;
+        } else {
+            newBoard[field] = -1;
+        }
+
         return new Node(newBoard, !isSmart);
     }
 
@@ -177,9 +166,5 @@ public class Node implements Serializable {
                 grade = moves.stream().mapToInt(a -> a.getGrade()).max().getAsInt();
             }
         }
-    }
-
-    private void initIsSmart(Role role) {
-        isSmart = (role == Role.CROSS && turn % 2 == 1) || (role == Role.ZERO && turn % 2 == 0);
     }
 }
